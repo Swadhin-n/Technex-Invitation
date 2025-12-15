@@ -11,11 +11,16 @@ import { cn } from "@/lib/utils"
 import Image from "next/image"
 
 export default function Page() {
+  const [showLanding, setShowLanding] = useState(true)
   const [loading, setLoading] = useState(false)
   const [progress, setProgress] = useState(0)
   const [revealed, setRevealed] = useState(false)
   const captureRef = useRef<HTMLDivElement>(null)
   const sigRef = useRef<SignatureCanvasHandle>(null)
+
+  const handleLaunch = () => {
+    setShowLanding(false)
+  }
 
   const handleReveal = () => {
     setLoading(true)
@@ -56,6 +61,173 @@ export default function Page() {
   }, [])
 
   const handleClear = () => sigRef.current?.clear()
+
+  if (showLanding) {
+    return (
+      <div className="relative min-h-screen w-full overflow-hidden bg-black">
+        {/* Video Background for Desktop */}
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover z-0 hidden md:block"
+        >
+          <source src="/TNX_bg.webm" type="video/webm" />
+        </video>
+
+        {/* Video Background for Mobile */}
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover z-0 md:hidden"
+        >
+          <source src="/TXN_bg_mobile.webm" type="video/webm" />
+        </video>
+
+        {/* Floating Images with Parallax Effect - Desktop Only */}
+        <div className="hidden md:block absolute inset-0 z-[5] pointer-events-none">
+          {/* 1.webp - Bottom Left (Close) */}
+          <div className="absolute bottom-8 left-8 animate-float-slow">
+            <Image
+              src="/1.webp"
+              alt=""
+              width={350}
+              height={350}
+              className="drop-shadow-2xl opacity-90 w-[350px] h-auto"
+              priority
+            />
+          </div>
+
+          {/* 2.webp - Top Right (Far) */}
+          <div className="absolute top-20 right-16 animate-float-medium opacity-70">
+            <Image
+              src="/2.webp"
+              alt=""
+              width={220}
+              height={220}
+              className="drop-shadow-xl w-[220px] h-auto"
+              priority
+            />
+          </div>
+
+          {/* 3.webp - Middle Left (Medium) */}
+          <div className="absolute top-1/3 left-20 animate-float-fast opacity-80">
+            <Image
+              src="/3.webp"
+              alt=""
+              width={280}
+              height={280}
+              className="drop-shadow-xl w-[280px] h-auto"
+              priority
+            />
+          </div>
+
+          {/* 4.webp - Bottom Right (Close) */}
+          <div className="absolute bottom-16 right-12 animate-float-slow">
+            <Image
+              src="/4.webp"
+              alt=""
+              width={320}
+              height={320}
+              className="drop-shadow-2xl opacity-90 w-[320px] h-auto"
+              priority
+            />
+          </div>
+
+          {/* 5.webp - Top Left (Far) */}
+          <div className="absolute top-12 left-1/4 animate-float-medium opacity-60">
+            <Image
+              src="/5.webp"
+              alt=""
+              width={200}
+              height={200}
+              className="drop-shadow-lg w-[200px] h-auto"
+              priority
+            />
+          </div>
+
+          {/* 6.webp - Middle Right (Medium) */}
+          <div className="absolute top-1/2 right-24 animate-float-fast opacity-85">
+            <Image
+              src="/6.webp"
+              alt=""
+              width={260}
+              height={260}
+              className="drop-shadow-xl w-[260px] h-auto"
+              priority
+            />
+          </div>
+
+          {/* 7.webp - Top Center (Far) */}
+          <div className="absolute top-24 left-1/2 -translate-x-1/2 animate-float-slow opacity-65">
+            <Image
+              src="/7.webp"
+              alt=""
+              width={210}
+              height={210}
+              className="drop-shadow-lg w-[210px] h-auto"
+              priority
+            />
+          </div>
+        </div>
+
+        {/* Launch Button - Centered */}
+        <div className="relative z-20 flex min-h-screen items-center justify-center pointer-events-auto">
+          <button 
+            onClick={handleLaunch}
+            className="group relative px-20 py-6 bg-gradient-to-br from-emerald-500 via-teal-600 to-cyan-700 text-white font-black text-2xl rounded-2xl hover:from-emerald-400 hover:via-teal-500 hover:to-cyan-600 transition-all duration-300 transform hover:scale-105 shadow-[0_0_40px_rgba(16,185,129,0.6)] hover:shadow-[0_0_60px_rgba(16,185,129,0.8)] border-2 border-emerald-400/50 uppercase tracking-wider"
+          >
+            <span className="relative z-10">Launch</span>
+            <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-2xl"></div>
+          </button>
+        </div>
+
+        <style jsx>{`
+          @keyframes float-slow {
+            0%, 100% {
+              transform: translateY(0px);
+            }
+            50% {
+              transform: translateY(-20px);
+            }
+          }
+
+          @keyframes float-medium {
+            0%, 100% {
+              transform: translateY(0px);
+            }
+            50% {
+              transform: translateY(-15px);
+            }
+          }
+
+          @keyframes float-fast {
+            0%, 100% {
+              transform: translateY(0px);
+            }
+            50% {
+              transform: translateY(-25px);
+            }
+          }
+
+          .animate-float-slow {
+            animation: float-slow 6s ease-in-out infinite;
+          }
+
+          .animate-float-medium {
+            animation: float-medium 5s ease-in-out infinite;
+          }
+
+          .animate-float-fast {
+            animation: float-fast 4s ease-in-out infinite;
+          }
+        `}</style>
+      </div>
+    )
+  }
 
   return (
     <main
@@ -138,7 +310,7 @@ export default function Page() {
 
                 <div className="mt-4 flex justify-center">
                   <Image
-                    src="/images/if-logo.webp"
+                    src="/ 1.webp"
                     alt="INFINITY 2K25"
                     width={1000}
                     height={300}
