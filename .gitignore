@@ -1,4 +1,7 @@
 node_modules
+<<<<<<< HEAD
+.next/
+=======
 .next
 
 # dependencies
@@ -43,3 +46,4 @@ next-env.d.ts
 *.swp
 *.swo
 *~
+>>>>>>> cfc145f3b61fe678ab17b50cf015a80d916079f9
