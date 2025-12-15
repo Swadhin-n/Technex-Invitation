@@ -63,40 +63,25 @@ export default function Page() {
       style={
         {
           "--background": "#0b0b0b",
-          "--foreground": "#f5e6c8",
-          "--primary": "#b68b2a",
-          "--secondary": "#0f3d2e",
-          "--accent": "#2f7a53",
+          "--foreground": "#e8e8e8",
+          "--primary": "#d0a02a",
+          "--secondary": "#23144792",
+          "--accent": "#281e58ff",
           "--parchment": "#efe3c4",
-          backgroundImage: "url('/images/inv-bg.webp')",
+          backgroundImage: "url('/images/invitebg_landscape.webp')",
         } as React.CSSProperties
       }
       className="min-h-dvh overflow-x-hidden text-[color:var(--foreground)] bg-fixed bg-cover bg-center bg-no-repeat"
     >
       <header className="sticky top-0 z-10 flex flex-col items-center gap-2 py-4 px-4">
-        <Image
-          src="/images/SVPCET.webp"
-          alt="SVPCET"
-          width={1400}
-          height={200}
-          className="h-auto w-full max-w-5xl object-contain drop-shadow"
-          priority
-        />
-        <Image
-          src="/images/dept-cse.webp"
-          alt="Department of Computer Science and Engineering"
-          width={1800}
-          height={120}
-          className="h-auto w-full max-w-6xl object-contain drop-shadow"
-          priority
-        />
+       
       </header>
 
       {loading && (
         <div className="fixed inset-0 z-50 grid place-items-center bg-black/90 backdrop-blur-md animate-in fade-in">
           <div className="flex flex-col items-center gap-6">
             <Image
-              src="/images/if-logo.webp"
+              src="/images/Technex_26_name.webp"
               alt="INFINITY 2K25"
               width={400}
               height={300}
@@ -130,15 +115,20 @@ export default function Page() {
               aria-label="Invitation details"
             >
               <div className="relative z-10">
-                <h2 className="text-balance text-center text-xl md:text-2xl font-semibold text-[color:var(--primary)]">
-                  Department of Computer Science and Engineering
-                </h2>
+                 <Image
+          src="/images/SVPCET.webp"
+          alt="SVPCET"
+          width={1400}
+          height={300}
+          className="h-auto w-full max-w-6xl object-contain drop-shadow"
+          priority
+        />
 
-                <p className="mt-6 text-center text-base md:text-lg">cordially invites you to</p>
+                <p className="text-center text-base md:text-lg">cordially invites you to</p>
 
-                <div className="mt-4 flex justify-center">
+                <div className="mt-9 flex justify-center">
                   <Image
-                    src="/images/if-logo.webp"
+                    src="/images/Technex_26_name.webp"
                     alt="INFINITY 2K25"
                     width={1000}
                     height={300}
