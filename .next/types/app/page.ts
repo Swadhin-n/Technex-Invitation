@@ -1,4 +1,4 @@
-// File: /Users/swadhinupadhyay/Documents/SVPCET/Technex-Invitation/app/page.tsx
+// File: /Users/nikita/Technex-Invitation/app/page.tsx
 import * as entry from '../../../app/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 
