@@ -126,22 +126,6 @@ export default function Page() {
           }
         `}</style>
 
-        {/* Launch Button - Bottom on Platform */}
-        <div className="fixed bottom-0 left-1/2 z-10 -translate-x-1/2 pointer-events-auto w-full flex justify-center pb-8 sm:pb-12 md:pb-16">
-          <button
-            onClick={handleLaunch}
-            className={cn(
-              "group relative px-10 sm:px-14 md:px-16 py-4 sm:py-5 md:py-6 bg-gradient-to-r from-indigo-600 via-purple-600 to-violet-700 text-white font-bold text-lg sm:text-xl md:text-2xl rounded-xl transition-all duration-300 transform shadow-[0_8px_32px_rgba(99,102,241,0.4)] border-2 border-indigo-400/40 uppercase tracking-wide",
-              "hover:from-indigo-500 hover:via-purple-500 hover:to-violet-600 hover:shadow-[0_12px_48px_rgba(99,102,241,0.6)] hover:scale-105 hover:-translate-y-1",
-              launching && "scale-95 opacity-0 pointer-events-none",
-            )}
-          >
-            <span className="relative z-10 flex items-center gap-2 sm:gap-3">
-              <span className="text-xl sm:text-2xl">🚀</span>
-              <span>Launch</span>
-            </span>
-          </button>
-        </div>
 
         {/* Spaceship - Center of Screen */}
         <div className="fixed inset-0 z-20 flex items-center justify-center pointer-events-none px-4 sm:px-6" style={{ paddingBottom: "30px" }}>
@@ -174,9 +158,10 @@ export default function Page() {
             </div>
           </div>
         </div>
+     
 
-        {/* Launch Button & Text */}
-        <div className="relative z-20 flex min-h-screen flex-col items-center justify-center pointer-events-auto px-4 sm:px-6 text-center">
+     {/* Launch Button & Text */}
+        <div className="relative z-20 flex min-h-screen flex-col items-center justify-end pb-16 sm:pb-24 pointer-events-auto px-4 sm:px-6 text-center">
           
           {/* Floating Text Instructions */}
           <div
@@ -196,26 +181,25 @@ export default function Page() {
             disabled={launching}
             className={cn(
               "relative group transition-all duration-500 ease-in-out transform",
-              // Hover effects (scale up)
               "hover:scale-110 active:scale-95",
-              // Launching exit animation
               launching && "scale-0 opacity-0 rotate-180"
             )}
             aria-label="Launch Spaceship"
           >
-            {/* Glow effect behind the button */}
             <div className="absolute inset-0 bg-indigo-500/30 blur-[40px] rounded-full group-hover:bg-indigo-400/50 transition-colors duration-500" />
             
             <Image
-              src="/images/launch_button.webp" // <--- REPLACE THIS WITH YOUR IMAGE PATH
+              src="/images/launch_button.webp"
               alt="Launch Button"
               width={200}
               height={200}
-              className="relative w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 object-contain drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]"
+              className="relative w-20 h-20 sm:w-28 sm:h-28 md:w-36 md:h-36 object-contain drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]"
               priority
             />
           </button>
         </div>
+  
+         
         <style jsx>{`
           @keyframes float-slow {
             0%,
