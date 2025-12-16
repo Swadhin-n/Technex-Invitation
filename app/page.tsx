@@ -42,12 +42,12 @@ export default function Page() {
       node?.removeEventListener("animationend", onEnd)
     }
     node?.addEventListener("animationend", onEnd)
-    // Fallback in case the animationend does not fire
+    // Fallback in case the animationend does not fire (3.5s animation + buffer)
     window.setTimeout(() => {
       node?.removeEventListener("animationend", onEnd)
       setShowLanding(false)
       window.setTimeout(() => setShipArriving(true), 500)
-    }, 5500)
+    }, 4000)
   }
 
   useEffect(() => {
@@ -103,172 +103,47 @@ export default function Page() {
 
   if (showLanding) {
     return (
-      <div className="relative min-h-screen w-full overflow-hidden bg-black">
-        {/* Video Background */}
-        <video
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="absolute inset-0 w-full h-full object-cover z-0 hidden md:block"
-        >
-          <source src="/TNX_bg.webm" type="video/webm" />
-        </video>
+      <div className="landing-bg fixed inset-0 w-screen h-screen overflow-hidden" style={{
+        backgroundImage: "url('/phone_bg.webp')",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+        backgroundColor: "#000"
+      }}>
+        <style>{`
+          @media (min-width: 768px) and (max-width: 1023px) {
+            .landing-bg {
+              background-image: url('/ipad.webp') !important;
+            }
+          }
+          @media (min-width: 1024px) {
+            .landing-bg {
+              background-image: url('/%20desktop_bg.webp') !important;
+            }
+          }
+        `}</style>
 
-        <video
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="absolute inset-0 w-full h-full object-cover z-0 md:hidden"
-        >
-          <source src="/TXN_bg_mobile.webm" type="video/webm" />
-        </video>
-
-        {/* Floating Elements - Desktop & Tablet */}
-        <div className="hidden md:block absolute inset-0 z-[5] pointer-events-none">
-          {/* 1.webp - Moved up for iPad visibility */}
-          <div className="absolute bottom-10 md:bottom-16 lg:bottom-10 left-6 animate-float-slow">
-            <Image
-              src="/1.webp"
-              alt=""
-              width={420}
-              height={420}
-              className="drop-shadow-2xl w-[160px] md:w-[200px] lg:w-[420px] h-auto"
-              priority
-            />
-          </div>
-
-          {/* 2.webp - Moved down and right for iPad */}
-          <div className="absolute top-12 md:top-32 lg:top-12 right-20 md:right-1 lg:right-20 animate-float-medium">
-            <Image
-              src="/2.webp"
-              alt=""
-              width={220}
-              height={220}
-              className="drop-shadow-xl w-[140px] md:w-[160px] lg:w-[220px] h-auto"
-              priority
-            />
-          </div>
-
-          <div className="absolute top-1/3 left-6 animate-float-fast">
-            <Image
-              src="/3.webp"
-              alt=""
-              width={280}
-              height={280}
-              className="drop-shadow-xl w-[180px] md:w-[220px] lg:w-[280px] h-auto"
-              priority
-            />
-          </div>
-
-          {/* 5.webp - Increased size for iPad */}
-          <div className="absolute top-12 left-1/2 -translate-x-1/2 animate-float-medium">
-            <Image
-              src="/5.webp"
-              alt=""
-              width={450}
-              height={450}
-              className="drop-shadow-lg w-[240px] md:w-[300px] lg:w-[450px] h-auto"
-              priority
-            />
-          </div>
-
-          {/* 6.webp - Moved up for iPad */}
-          <div className="absolute bottom-8 md:bottom-40 lg:bottom-8 right-8 md:right-3 lg:right-8 animate-float-fast">
-            <Image
-              src="/6.webp"
-              alt=""
-              width={340}
-              height={340}
-              className="drop-shadow-xl w-[180px] md:w-[220px] lg:w-[340px] h-auto"
-              priority
-            />
-          </div>
-
-          {/* 7.webp - Moved down for iPad */}
-          <div className="absolute top-8 md:top-[20%] lg:top-8 left-6 md:left-3 lg:left-6 animate-float-slow">
-            <Image
-              src="/7.webp"
-              alt=""
-              width={180}
-              height={180}
-              className="drop-shadow-lg w-[120px] md:w-[140px] lg:w-[180px] h-auto"
-              priority
-            />
-          </div>
+        {/* Launch Button - Bottom on Platform */}
+        <div className="fixed bottom-0 left-1/2 z-10 -translate-x-1/2 pointer-events-auto w-full flex justify-center pb-8 sm:pb-12 md:pb-16">
+          <button
+            onClick={handleLaunch}
+            className={cn(
+              "group relative px-10 sm:px-14 md:px-16 py-4 sm:py-5 md:py-6 bg-gradient-to-r from-indigo-600 via-purple-600 to-violet-700 text-white font-bold text-lg sm:text-xl md:text-2xl rounded-xl transition-all duration-300 transform shadow-[0_8px_32px_rgba(99,102,241,0.4)] border-2 border-indigo-400/40 uppercase tracking-wide",
+              "hover:from-indigo-500 hover:via-purple-500 hover:to-violet-600 hover:shadow-[0_12px_48px_rgba(99,102,241,0.6)] hover:scale-105 hover:-translate-y-1",
+              launching && "scale-95 opacity-0 pointer-events-none",
+            )}
+          >
+            <span className="relative z-10 flex items-center gap-2 sm:gap-3">
+              <span className="text-xl sm:text-2xl">🚀</span>
+              <span>Launch</span>
+            </span>
+          </button>
         </div>
 
-        {/* Floating Elements - Mobile Only */}
-        <div className="md:hidden absolute inset-0 z-[5] pointer-events-none">
-          <div className="absolute top-16 left-4 animate-float-slow">
-            <Image
-              src="/5.webp"
-              alt=""
-              width={200}
-              height={200}
-              className="drop-shadow-lg w-[200px] h-auto"
-              priority
-            />
-          </div>
-
-          <div className="absolute top-20 right-4 animate-float-medium">
-            <Image
-              src="/2.webp"
-              alt=""
-              width={140}
-              height={140}
-              className="drop-shadow-xl w-[140px] h-auto"
-              priority
-            />
-          </div>
-
-          <div className="absolute top-1/3 left-3 animate-float-fast">
-            <Image
-              src="/7.webp"
-              alt=""
-              width={120}
-              height={120}
-              className="drop-shadow-lg w-[120px] h-auto"
-              priority
-            />
-          </div>
-
-          <div className="absolute bottom-32 right-3 animate-float-slow">
-            <Image
-              src="/6.webp"
-              alt=""
-              width={180}
-              height={180}
-              className="drop-shadow-xl w-[180px] h-auto"
-              priority
-            />
-          </div>
-
-          <div className="absolute bottom-24 left-4 animate-float-medium">
-            <Image
-              src="/1.webp"
-              alt=""
-              width={160}
-              height={160}
-              className="drop-shadow-2xl w-[160px] h-auto"
-              priority
-            />
-          </div>
-        </div>
-
-        {/* Platform with Spaceship - Bottom */}
-        <div className="absolute bottom-0 left-1/2 z-10 -translate-x-1/2 w-full flex justify-center pointer-events-none px-2 sm:px-4">
-          <div className="relative w-full max-w-sm sm:max-w-md md:max-w-lg flex items-end justify-center">
-            <Image
-              src="/4.webp"
-              alt="Launch platform"
-              width={480}
-              height={480}
-              className="h-auto w-full drop-shadow-[0_30px_45px_rgba(0,0,0,0.55)] animate-float-slow"
-              priority
-            />
-            <div className="absolute left-[40%] bottom-[25%] -translate-x-1/2 w-40 sm:w-56 md:w-60 h-auto">
+        {/* Spaceship - Center of Screen */}
+        <div className="fixed inset-0 z-20 flex items-center justify-center pointer-events-none px-4 sm:px-6" style={{ paddingBottom: "30px" }}>
+          <div className="relative flex items-center justify-center">
+            <div className="w-48 sm:w-64 md:w-80 lg:w-96 h-auto">
               <div
                 ref={shipRef}
                 className={cn("ship-anim-wrapper", launching && "ship-launch-animation")}
@@ -286,29 +161,12 @@ export default function Page() {
                   className="w-full h-auto"
                   style={{
                     filter: "saturate(1.1)",
-                    minHeight: "320px",
+                    minHeight: "280px",
                   }}
                 />
               </div>
             </div>
           </div>
-        </div>
-
-        {/* Launch Button */}
-        <div className="relative z-20 flex min-h-screen items-center justify-center pointer-events-auto px-4 sm:px-6 text-center">
-          <button
-            onClick={handleLaunch}
-            className={cn(
-              "group relative px-10 sm:px-14 md:px-16 py-4 sm:py-5 md:py-6 bg-gradient-to-r from-indigo-600 via-purple-600 to-violet-700 text-white font-bold text-lg sm:text-xl md:text-2xl rounded-xl transition-all duration-300 transform shadow-[0_8px_32px_rgba(99,102,241,0.4)] border-2 border-indigo-400/40 uppercase tracking-wide",
-              "hover:from-indigo-500 hover:via-purple-500 hover:to-violet-600 hover:shadow-[0_12px_48px_rgba(99,102,241,0.6)] hover:scale-105 hover:-translate-y-1",
-              launching && "scale-95 opacity-0 pointer-events-none",
-            )}
-          >
-            <span className="relative z-10 flex items-center gap-2 sm:gap-3">
-              <span className="text-xl sm:text-2xl">🚀</span>
-              <span>Launch</span>
-            </span>
-          </button>
         </div>
 
         <style jsx>{`
@@ -361,22 +219,34 @@ export default function Page() {
               transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
               opacity: 1;
             }
-            20% {
-              transform: translate3d(0, -80px, 0) scale(1.05) rotate(-5deg);
+            12% {
+              transform: translate3d(0, -8vh, 0) scale(1) rotate(0deg);
               opacity: 1;
             }
-            35% {
-              transform: translate3d(0, -80px, 0) scale(1.05) rotate(-5deg);
+            29% {
+              transform: translate3d(0, -8vh, 0) scale(1) rotate(0deg);
               opacity: 1;
+            }
+            38% {
+              transform: translate3d(12vw, -12vh, 0) scale(0.98) rotate(12deg);
+              opacity: 1;
+            }
+            59% {
+              transform: translate3d(30vw, -15vh, 0) scale(0.95) rotate(15deg);
+              opacity: 1;
+            }
+            82% {
+              transform: translate3d(50vw, -20vh, 0) scale(0.85) rotate(18deg);
+              opacity: 0.9;
             }
             100% {
-              transform: translate3d(80vw, -130vh, 0) scale(0.8) rotate(18deg);
-              opacity: 1;
+              transform: translate3d(120vw, -100vh, 0) scale(0.75) rotate(22deg);
+              opacity: 0;
             }
           }
 
           .ship-launch-animation {
-            animation: ship-launch-animation 7s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+            animation: ship-launch-animation 3.5s linear forwards !important;
           }
         `}</style>
       </div>
@@ -399,19 +269,21 @@ export default function Page() {
       }
       className="min-h-dvh w-full overflow-x-hidden text-[color:var(--foreground)] bg-fixed bg-cover bg-center bg-no-repeat animate-in fade-in"
     >
-      {/* Background Platform - Bottom Right */}
-      <div className="fixed bottom-0 right-0 z-0 pointer-events-none">
-        <div className="relative w-72 sm:w-96 md:w-[500px] h-auto">
-          <Image
-            src="/4.webp"
-            alt="Platform background"
-            width={500}
-            height={500}
-            className="h-auto w-full drop-shadow-[0_40px_60px_rgba(0,0,0,0.4)] opacity-85"
-            priority
-          />
-          {/* Spaceship arriving on envelope page only */}
-          {!revealed && shipArriving && (
+      {/* Background Platform - Bottom Right - Removed */}
+      {/* Spaceship arriving on envelope page only */}
+      {!revealed && shipArriving && (
+        <div className="fixed bottom-0 right-0 z-0 pointer-events-none">
+          <div className="relative w-72 sm:w-96 md:w-[500px] h-auto">
+            {/* Platform Image */}
+            <Image
+              src="/4.webp"
+              alt="Platform"
+              width={500}
+              height={400}
+              className="w-full h-auto object-contain"
+              priority
+            />
+            {/* Spaceship on Platform */}
             <div className="absolute right-[36%] sm:right-[38%] md:right-[40%] lg:right-[41%] bottom-[30%] sm:bottom-[34%] md:bottom-[38%] lg:bottom-[40%] w-36 sm:w-44 md:w-52 lg:w-60 xl:w-64 h-auto ship-arrival-animation">
               <model-viewer
                 src="/spaceship.glb"
@@ -429,108 +301,11 @@ export default function Page() {
                 }}
               />
             </div>
-          )}
+          </div>
         </div>
-      </div>
-
-      {/* Floating Elements on Envelope Page */}
-      {!revealed && (
-        <>
-          {/* Desktop floating elements */}
-          <div className="hidden md:block fixed inset-0 z-[5] pointer-events-none">
-            <div className="absolute top-16 md:top-[45%] lg:top-16 right-16 md:right-8 lg:right-16 animate-float-medium">
-              <Image
-                src="/2.webp"
-                alt=""
-                width={200}
-                height={200}
-                className="drop-shadow-xl w-[160px] md:w-[180px] lg:w-[200px] h-auto"
-                priority
-              />
-            </div>
-
-            <div className="absolute top-1/3 left-1/4 md:left-[8%] lg:left-1/4 animate-float-fast">
-              <Image
-                src="/3.webp"
-                alt=""
-                width={220}
-                height={220}
-                className="drop-shadow-xl w-[180px] md:w-[200px] lg:w-[220px] h-auto"
-                priority
-              />
-            </div>
-
-            <div className="absolute top-12 left-1/2 -translate-x-1/2 animate-float-medium">
-              <Image
-                src="/5.webp"
-                alt=""
-                width={320}
-                height={320}
-                className="drop-shadow-lg w-[320px] h-auto"
-                priority
-              />
-            </div>
-
-            <div className="absolute bottom-32 left-16 animate-float-fast">
-              <Image
-                src="/7.webp"
-                alt=""
-                width={160}
-                height={160}
-                className="drop-shadow-lg w-[160px] h-auto"
-                priority
-              />
-            </div>
-          </div>
-
-          {/* Mobile & Tablet floating elements - optimized for iPad */}
-          <div className="md:hidden fixed inset-0 z-[5] pointer-events-none">
-            <div className="absolute top-16 sm:top-20 left-3 sm:left-6 animate-float-slow">
-              <Image
-                src="/5.webp"
-                alt=""
-                width={180}
-                height={180}
-                className="drop-shadow-lg w-[140px] sm:w-[160px] h-auto"
-                priority
-              />
-            </div>
-
-            <div className="absolute top-20 sm:top-24 right-3 sm:right-6 animate-float-medium">
-              <Image
-                src="/2.webp"
-                alt=""
-                width={150}
-                height={150}
-                className="drop-shadow-xl w-[110px] sm:w-[130px] h-auto"
-                priority
-              />
-            </div>
-
-            <div className="absolute top-1/3 left-2 sm:left-4 animate-float-fast">
-              <Image
-                src="/7.webp"
-                alt=""
-                width={130}
-                height={130}
-                className="drop-shadow-lg w-[90px] sm:w-[110px] h-auto"
-                priority
-              />
-            </div>
-
-            <div className="absolute bottom-[28%] sm:bottom-[30%] right-4 sm:right-6 animate-float-slow">
-              <Image
-                src="/6.webp"
-                alt=""
-                width={170}
-                height={170}
-                className="drop-shadow-xl w-[130px] sm:w-[150px] h-auto"
-                priority
-              />
-            </div>
-          </div>
-        </>
       )}
+
+      {/* Floating Elements on Envelope Page - Removed */}
 
       {/* Content Container - Centered */}
       <div className="relative z-10 min-h-dvh w-full flex flex-col items-center justify-center px-4 sm:px-6 py-8 sm:py-12">
