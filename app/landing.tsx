@@ -8,7 +8,7 @@ export default function Landing() {
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
         <Image
-          src="/images/web-bg.webp"
+          src="/images/invitebg_landscape.webp"
           alt="TNX Background"
           fill
           className="object-cover"
@@ -22,7 +22,7 @@ export default function Landing() {
           {/* Logo/Title Section */}
           <div className="mb-8">
             <Image
-              src="/images/in-text.webp"
+              src="/images/Technex_26_name.webp"
               alt="Technex"
               width={400}
               height={100}
@@ -60,20 +60,7 @@ export default function Landing() {
               height={120}
               className="opacity-80 hover:opacity-100 transition-opacity"
             />
-            <Image
-              src="/images/dept-cse.webp"
-              alt="Department CSE"
-              width={120}
-              height={120}
-              className="opacity-80 hover:opacity-100 transition-opacity"
-            />
-            <Image
-              src="/images/if-logo.webp"
-              alt="IF Logo"
-              width={120}
-              height={120}
-              className="opacity-80 hover:opacity-100 transition-opacity"
-            />
+    
           </div>
         </div>
       </div>
