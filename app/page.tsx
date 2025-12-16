@@ -1,105 +1,108 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { useCallback, useEffect, useRef, useState } from "react"
-import JungleLetter from "@/components/jungle-letter"
-import SignatureCanvas, { type SignatureCanvasHandle } from "@/components/signature-canvas"
-import FingerprintScanner from "@/components/fingerprint-scanner"
-import { toPng } from "html-to-image"
-import { Button } from "@/components/ui/button"
-import { cn } from "@/lib/utils"
-import Image from "next/image"
+import { useCallback, useEffect, useRef, useState } from "react";
+import JungleLetter from "@/components/jungle-letter";
+import SignatureCanvas, {
+  type SignatureCanvasHandle,
+} from "@/components/signature-canvas";
+import FingerprintScanner from "@/components/fingerprint-scanner";
+import { toPng } from "html-to-image";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+import Image from "next/image";
 
 declare module "react" {
   namespace JSX {
     interface IntrinsicElements {
-      "model-viewer": any
+      "model-viewer": any;
     }
   }
 }
 
 export default function Page() {
-  const [showLanding, setShowLanding] = useState(true)
-  const [launching, setLaunching] = useState(false)
-  const [loading, setLoading] = useState(false)
-  const [progress, setProgress] = useState(0)
-  const [revealed, setRevealed] = useState(false)
-  const [shipArriving, setShipArriving] = useState(false)
-  const [biometricVerified, setBiometricVerified] = useState(false)
-  const captureRef = useRef<HTMLDivElement>(null)
-  const sigRef = useRef<SignatureCanvasHandle>(null)
-  const shipRef = useRef<HTMLDivElement>(null)
+  const [showLanding, setShowLanding] = useState(true);
+  const [launching, setLaunching] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const [revealed, setRevealed] = useState(false);
+  const [shipArriving, setShipArriving] = useState(false);
+  const [biometricVerified, setBiometricVerified] = useState(false);
+  const captureRef = useRef<HTMLDivElement>(null);
+  const sigRef = useRef<SignatureCanvasHandle>(null);
+  const shipRef = useRef<HTMLDivElement>(null);
 
   const handleLaunch = () => {
-    if (launching) return
-    setLaunching(true)
-    const node = shipRef.current
+    if (launching) return;
+    setLaunching(true);
+    const node = shipRef.current;
     const onEnd = () => {
-      setShowLanding(false)
+      setShowLanding(false);
       // Start ship arrival as soon as letter page loads
-      window.setTimeout(() => setShipArriving(true), 500)
-      node?.removeEventListener("animationend", onEnd)
-    }
-    node?.addEventListener("animationend", onEnd)
+      window.setTimeout(() => setShipArriving(true), 500);
+      node?.removeEventListener("animationend", onEnd);
+    };
+    node?.addEventListener("animationend", onEnd);
     // Fallback in case the animationend does not fire
     window.setTimeout(() => {
-      node?.removeEventListener("animationend", onEnd)
-      setShowLanding(false)
-      window.setTimeout(() => setShipArriving(true), 500)
-    }, 5500)
-  }
+      node?.removeEventListener("animationend", onEnd);
+      setShowLanding(false);
+      window.setTimeout(() => setShipArriving(true), 500);
+    }, 5500);
+  };
 
   useEffect(() => {
     const existingScript = document.querySelector(
-      'script[src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"]',
-    )
-    if (existingScript) return
-    const script = document.createElement("script")
-    script.type = "module"
-    script.src = "https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"
-    document.head.appendChild(script)
-  }, [])
+      'script[src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"]'
+    );
+    if (existingScript) return;
+    const script = document.createElement("script");
+    script.type = "module";
+    script.src =
+      "https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js";
+    document.head.appendChild(script);
+  }, []);
 
   const handleReveal = () => {
-    setLoading(true)
-    setProgress(0)
+    setLoading(true);
+    setProgress(0);
     // Animate progress 0-100% over 1 second
-    const start = Date.now()
-    const duration = 1000
+    const start = Date.now();
+    const duration = 1000;
     const animate = () => {
-      const elapsed = Date.now() - start
-      const p = Math.min((elapsed / duration) * 100, 100)
-      setProgress(p)
+      const elapsed = Date.now() - start;
+      const p = Math.min((elapsed / duration) * 100, 100);
+      setProgress(p);
       if (p < 100) {
-        requestAnimationFrame(animate)
+        requestAnimationFrame(animate);
       } else {
-        setLoading(false)
-        setRevealed(true)
+        setLoading(false);
+        setRevealed(true);
       }
-    }
-    requestAnimationFrame(animate)
-  }
+    };
+    requestAnimationFrame(animate);
+  };
 
   const handleDownload = useCallback(async () => {
-    const node = captureRef.current
-    if (!node) return
+    const node = captureRef.current;
+    if (!node) return;
     try {
       const dataUrl = await toPng(node, {
         cacheBust: true,
         pixelRatio: 2,
-      })
-      const a = document.createElement("a")
-      a.href = dataUrl
-      a.download = "infinity-invitation.png"
-      a.click()
+      });
+      const a = document.createElement("a");
+      a.href = dataUrl;
+      a.download = "technexinvitation.png";
+      a.click();
     } catch (err) {
-      console.error("[v0] export failed", err)
-      alert("Could not save image. Please try again.")
+      console.error("[v0] export failed", err);
+      alert("Could not save image. Please try again.");
     }
-  }, [])
+  }, []);
 
-  const handleClear = () => sigRef.current?.clear()
+  const handleClear = () => sigRef.current?.clear();
 
   if (showLanding) {
     return (
@@ -271,7 +274,10 @@ export default function Page() {
             <div className="absolute left-[40%] bottom-[25%] -translate-x-1/2 w-40 sm:w-56 md:w-60 h-auto">
               <div
                 ref={shipRef}
-                className={cn("ship-anim-wrapper", launching && "ship-launch-animation")}
+                className={cn(
+                  "ship-anim-wrapper",
+                  launching && "ship-launch-animation"
+                )}
                 style={{ width: "100%" }}
               >
                 <model-viewer
@@ -301,7 +307,7 @@ export default function Page() {
             className={cn(
               "group relative px-10 sm:px-14 md:px-16 py-4 sm:py-5 md:py-6 bg-gradient-to-r from-indigo-600 via-purple-600 to-violet-700 text-white font-bold text-lg sm:text-xl md:text-2xl rounded-xl transition-all duration-300 transform shadow-[0_8px_32px_rgba(99,102,241,0.4)] border-2 border-indigo-400/40 uppercase tracking-wide",
               "hover:from-indigo-500 hover:via-purple-500 hover:to-violet-600 hover:shadow-[0_12px_48px_rgba(99,102,241,0.6)] hover:scale-105 hover:-translate-y-1",
-              launching && "scale-95 opacity-0 pointer-events-none",
+              launching && "scale-95 opacity-0 pointer-events-none"
             )}
           >
             <span className="relative z-10 flex items-center gap-2 sm:gap-3">
@@ -313,7 +319,8 @@ export default function Page() {
 
         <style jsx>{`
           @keyframes float-slow {
-            0%, 100% {
+            0%,
+            100% {
               transform: translateY(0px);
             }
             50% {
@@ -322,7 +329,8 @@ export default function Page() {
           }
 
           @keyframes float-medium {
-            0%, 100% {
+            0%,
+            100% {
               transform: translateY(0px);
             }
             50% {
@@ -331,7 +339,8 @@ export default function Page() {
           }
 
           @keyframes float-fast {
-            0%, 100% {
+            0%,
+            100% {
               transform: translateY(0px);
             }
             50% {
@@ -376,11 +385,12 @@ export default function Page() {
           }
 
           .ship-launch-animation {
-            animation: ship-launch-animation 7s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+            animation: ship-launch-animation 7s
+              cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
           }
         `}</style>
       </div>
-    )
+    );
   }
 
   return (
@@ -539,10 +549,10 @@ export default function Page() {
             <div className="flex flex-col items-center gap-4 sm:gap-6">
               <Image
                 src="/images/Technex_26_name.webp"
-                alt="INFINITY 2K25"
+                alt="TECHNEX 2K25"
                 width={400}
                 height={300}
-                className="h-auto w-48 sm:w-64 md:w-80 object-contain animate-pulse"
+                className="h-auto w-48  sm:w-64 md:w-80 object-contain animate-pulse"
                 priority
               />
               <div className="w-56 sm:w-64 md:w-80 h-3 bg-[color:var(--secondary)] rounded-full overflow-hidden">
@@ -577,16 +587,27 @@ export default function Page() {
               ) : (
                 <div className="text-center space-y-6 animate-in fade-in rounded-2xl border border-[color:var(--primary)]/40 bg-[color:var(--secondary)]/75 backdrop-blur-sm p-6 sm:p-8">
                   <div className="space-y-4">
-                    <h2 className="text-2xl font-bold" style={{ color: "#8affff", letterSpacing: "2px" }}>
+                    <h2
+                      className="text-2xl font-bold"
+                      style={{ color: "#8affff", letterSpacing: "2px" }}
+                    >
                       WELCOME, EXPLORER
                     </h2>
-                    <p className="text-sm" style={{ color: "#d6d9ff", lineHeight: "1.6" }}>
+                    <p
+                      className="text-sm"
+                      style={{ color: "#d6d9ff", lineHeight: "1.6" }}
+                    >
                       Your identity has been successfully verified.
-                      <br />
-                      You are now authorized to enter the <strong>Neo‑Celestia Network</strong>.
+                      <br/>
+                      You are now authorized to enter the{" "}
+                      <strong>Neo‑Celestia Network</strong>.
                     </p>
-                    <p className="text-xs" style={{ color: "#aeb6ff", marginTop: "12px" }}>
-                      May your journey be guided by innovation, curiosity, and cosmic excellence.
+                    <p
+                      className="text-xs"
+                      style={{ color: "#aeb6ff", marginTop: "12px" }}
+                    >
+                      May your journey be guided by innovation, curiosity, and
+                      cosmic excellence.
                     </p>
                   </div>
                   <Button
@@ -605,7 +626,7 @@ export default function Page() {
           <div className="w-full max-w-3xl space-y-6 sm:space-y-8">
             <section
               className={cn(
-                "relative rounded-2xl border border-[color:var(--primary)]/40 bg-[color:var(--secondary)]/75 p-4 sm:p-6 md:p-10 backdrop-blur-sm animate-in fade-in overflow-hidden",
+                "relative rounded-2xl border border-[color:var(--primary)]/40 bg-[color:var(--secondary)]/75 p-4 sm:p-6 md:p-10 backdrop-blur-sm animate-in fade-in overflow-hidden"
               )}
               aria-label="Invitation details"
             >
@@ -613,48 +634,64 @@ export default function Page() {
                 <Image
                   src="/images/SVPCET.webp"
                   alt="SVPCET"
-                  width={1400}
+                  width={1500}
                   height={300}
                   className="h-auto w-full max-w-sm sm:max-w-md md:max-w-lg mx-auto object-contain drop-shadow"
                   priority
                 />
 
-                <p className="text-center text-sm sm:text-base md:text-lg">cordially invites you to</p>
+                <p className="text-center text-sm sm:text-base md:text-lg">
+                  Cordially invites you to
+                </p>
 
                 <div className="flex justify-center">
                   <Image
                     src="/images/Technex_26_name.webp"
-                    alt="INFINITY 2K25"
-                    width={1000}
-                    height={300}
+                    alt="TECHNEX 2K25"
+                    width={3000}
+                    height={700}
                     className="h-auto w-full max-w-xs sm:max-w-sm md:max-w-md object-contain"
                     priority
                   />
                 </div>
 
                 <h3 className="text-center text-base sm:text-lg md:text-2xl font-bold text-[color:var(--foreground)]">
-                  A Technical Extravaganza
+                  A National-Level Technical Fest
                 </h3>
 
                 <p className="text-center text-xs sm:text-sm md:text-base leading-relaxed">
-                  A celebration of innovation, intellect, and ingenuity — where technology meets creativity.
+                  A distinguished event celebrating innovation, technological
+                  excellence, and intellectual leadership empowering technical
+                  minds and bringing together academia, industry, and young
+                  innovators
                 </p>
                 <p className="text-center text-xs sm:text-sm md:text-base leading-relaxed">
-                  Join us for a day filled with competitions, exhibitions, and ideas that push the boundaries of
-                  possibility.
+                  We are honored to invite you to grace TECHNEX 2025–26, a
+                  two-day technical event featuring expert sessions, workshops,
+                  competitions, and exhibitions that foster collaboration,
+                  creativity, and emerging technologies.
                 </p>
 
                 <div className="grid gap-1 sm:gap-2 text-center text-xs sm:text-sm md:text-base">
                   <p>
-                    <span className="font-semibold text-[color:var(--primary)]">Date:</span> 18th December 2025
+                    <span className="font-semibold text-[color:var(--primary)]">
+                      Date :
+                    </span>{" "}
+                    18th & 19th December 2025
                   </p>
                   <p>
-                    <span className="font-semibold text-[color:var(--primary)]">Venue:</span> Block B, Second Floor
+                    <span className="font-semibold text-[color:var(--primary)]">
+                      Venue :
+                    </span>{" "}
+                    St. Vincent Pallotti College of Engineering and Technology,
+                    Gavsi Manapur, Nagpur
                   </p>
                 </div>
 
                 <p className="text-center text-xs sm:text-sm md:text-base leading-relaxed">
-                  We look forward to your gracious presence and active participation in making INFINITY a grand success.
+                  Your presence will greatly enrich TECHNEX 2025–26.
+                <br></br>
+                  We look forward to welcoming you.
                 </p>
               </div>
             </section>
@@ -714,8 +751,7 @@ export default function Page() {
             </section>
 
             <footer className="text-center text-xs sm:text-sm">
-              Crafted for INFINITY — where technology meets creativity.
-              <p className="mt-2 text-center text-xs sm:text-sm">Made with love by Swadhin Upadhyay 🤍</p>
+              Crafted for TECHNEX 2K25 — Let the Cosmos align!
             </footer>
           </div>
         )}
@@ -734,10 +770,11 @@ export default function Page() {
         }
 
         .ship-arrival-animation {
-          animation: ship-arrival-animation 5s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+          animation: ship-arrival-animation 5s cubic-bezier(0.22, 0.61, 0.36, 1)
+            forwards;
           will-change: transform;
         }
       `}</style>
     </main>
-  )
+  );
 }
