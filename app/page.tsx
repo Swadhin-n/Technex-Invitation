@@ -175,6 +175,47 @@ export default function Page() {
           </div>
         </div>
 
+        {/* Launch Button & Text */}
+        <div className="relative z-20 flex min-h-screen flex-col items-center justify-center pointer-events-auto px-4 sm:px-6 text-center">
+          
+          {/* Floating Text Instructions */}
+          <div
+            className={cn(
+              "mb-4 sm:mb-6 transition-opacity duration-300",
+              launching ? "opacity-0" : "opacity-100 animate-bounce"
+            )}
+          >
+            <p className="text-white font-bold text-sm sm:text-base md:text-lg tracking-[0.2em] drop-shadow-[0_4px_4px_rgba(0,0,0,1)]">
+              Tap to launch!
+            </p>
+          </div>
+
+          {/* Image Button */}
+          <button
+            onClick={handleLaunch}
+            disabled={launching}
+            className={cn(
+              "relative group transition-all duration-500 ease-in-out transform",
+              // Hover effects (scale up)
+              "hover:scale-110 active:scale-95",
+              // Launching exit animation
+              launching && "scale-0 opacity-0 rotate-180"
+            )}
+            aria-label="Launch Spaceship"
+          >
+            {/* Glow effect behind the button */}
+            <div className="absolute inset-0 bg-indigo-500/30 blur-[40px] rounded-full group-hover:bg-indigo-400/50 transition-colors duration-500" />
+            
+            <Image
+              src="/images/launch_button.webp" // <--- REPLACE THIS WITH YOUR IMAGE PATH
+              alt="Launch Button"
+              width={200}
+              height={200}
+              className="relative w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 object-contain drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]"
+              priority
+            />
+          </button>
+        </div>
         <style jsx>{`
           @keyframes float-slow {
             0%,
@@ -207,15 +248,15 @@ export default function Page() {
           }
 
           .animate-float-slow {
-            animation: float-slow 6s ease-in-out infinite;
+            animation: float-slow 4s ease-in-out infinite;
           }
 
           .animate-float-medium {
-            animation: float-medium 5s ease-in-out infinite;
+            animation: float-medium 3s ease-in-out infinite;
           }
 
           .animate-float-fast {
-            animation: float-fast 4s ease-in-out infinite;
+            animation: float-fast 2s ease-in-out infinite;
           }
 
           .ship-anim-wrapper {
@@ -345,7 +386,7 @@ export default function Page() {
         {!revealed && (
           <>
             {/* Desktop & Laptop: show envelope */}
-            <div className="hidden xl:block w-full max-w-2xl">
+            <div className="hidden xl:block w-full max-w-xl">
               <JungleLetter onReveal={handleReveal} />
             </div>
 
@@ -363,7 +404,7 @@ export default function Page() {
                   <div className="space-y-4">
                     <h2
                       className="text-2xl font-bold"
-                      style={{ color: "#8affff", letterSpacing: "2px" }}
+                      style={{ color: "#d3a826ff", letterSpacing: "2px" }}
                     >
                       WELCOME, EXPLORER
                     </h2>
@@ -386,7 +427,7 @@ export default function Page() {
                   </div>
                   <Button
                     onClick={handleReveal}
-                    className="bg-gradient-to-r from-indigo-600 via-purple-600 to-violet-700 text-white font-bold px-8 py-3 rounded-xl shadow-lg hover:scale-105 transition-transform"
+                    className="bg-gradient-to-r from-yellow-600 via-yellow-800 to-yellow-600 text-white font-bold px-8 py-3 rounded-xl shadow-lg hover:scale-105 transition-transform"
                   >
                     Proceed to Invitation
                   </Button>
