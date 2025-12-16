@@ -390,7 +390,7 @@ export default function Page() {
         {
           "--background": "#0b0b0b",
           "--foreground": "#e8e8e8",
-          "--primary": "#d0a02a",
+          "--primary": "#e0aa3e",
           "--secondary": "#23144792",
           "--accent": "#281e58ff",
           "--parchment": "#efe3c4",
@@ -646,11 +646,10 @@ export default function Page() {
 
                 <div className="grid gap-1 sm:gap-2 text-center text-xs sm:text-sm md:text-base">
                   <p>
-                    <span className="font-semibold text-[color:var(--primary)]">Date:</span> 10th Oct 2025
+                    <span className="font-semibold text-[color:var(--primary)]">Date:</span> 18th December 2025
                   </p>
                   <p>
-                    <span className="font-semibold text-[color:var(--primary)]">Venue:</span> CSE department block B,
-                    first floor
+                    <span className="font-semibold text-[color:var(--primary)]">Venue:</span> Block B, Second Floor
                   </p>
                 </div>
 
