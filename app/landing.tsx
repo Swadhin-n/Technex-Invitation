@@ -8,7 +8,7 @@ export default function Landing() {
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
         <Image
-          src="/images/invitebg_landscape.webp"
+          src="public/images/invitebg_landscape.webp"
           alt="TNX Background"
           fill
           className="object-cover"

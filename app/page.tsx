@@ -298,15 +298,29 @@ export default function Page() {
           "--secondary": "#23144792",
           "--accent": "#281e58ff",
           "--parchment": "#efe3c4",
-          backgroundImage: "url('/images/invitebg_landscape.webp')",
+          // Background for the *revealed* invitation content
+          backgroundImage: "url('/images/invitebg.webp')",
         } as React.CSSProperties
       }
       className="min-h-dvh w-full overflow-x-hidden text-[color:var(--foreground)] bg-fixed bg-cover bg-center bg-no-repeat animate-in fade-in"
     >
-      {/* Background Platform - Bottom Right - Removed */}
-      {/* Spaceship arriving on envelope page only */}
+      {/* NEW: Full visibility background container for the envelope/scanner section. */}
+      {!revealed && (
+        <div 
+          className="fixed inset-0 min-h-dvh w-full bg-cover bg-center bg-no-repeat animate-in fade-in"
+          style={{
+            backgroundImage: "url('/images/invitebg_landscape.webp')", 
+            zIndex: 0, 
+          }}
+        >
+          {/* Translucent overlay REMOVED to ensure the background is fully visible */}
+        </div>
+      )}
+
+
+      {/* Spaceship arriving on envelope page only (z-index 10, visible over the new background) */}
       {!revealed && shipArriving && (
-        <div className="fixed bottom-0 right-0 z-0 pointer-events-none">
+        <div className="fixed bottom-0 right-0 z-10 pointer-events-none">
           <div className="relative w-72 sm:w-96 md:w-[500px] h-auto">
             {/* Platform Image */}
             <Image
@@ -339,10 +353,9 @@ export default function Page() {
         </div>
       )}
 
-      {/* Floating Elements on Envelope Page - Removed */}
 
-      {/* Content Container - Centered */}
-      <div className="relative z-10 min-h-dvh w-full flex flex-col items-center justify-center px-4 sm:px-6 py-8 sm:py-12">
+      {/* Content Container - Centered (z-index 20) */}
+      <div className="relative z-20 min-h-dvh w-full flex flex-col items-center justify-center px-4 sm:px-6 py-8 sm:py-12">
         {loading && (
           <div className="fixed inset-0 z-50 grid place-items-center bg-black/90 backdrop-blur-md animate-in fade-in">
             <div className="flex flex-col items-center gap-4 sm:gap-6">
@@ -377,6 +390,8 @@ export default function Page() {
             {/* Mobile & Tablet (including iPads): show fingerprint scanner */}
             <div className="xl:hidden w-full max-w-md px-6">
               {!biometricVerified ? (
+                // NOTE: The background of this specific component (bg-[color:var(--secondary)]/75) 
+                // remains translucent, allowing the new full background to show through.
                 <div className="space-y-6 rounded-2xl border border-[color:var(--primary)]/40 bg-[color:var(--secondary)]/75 backdrop-blur-sm p-6 sm:p-8">
                   <FingerprintScanner
                     onVerified={() => setBiometricVerified(true)}
@@ -425,11 +440,11 @@ export default function Page() {
           <div className="w-full max-w-3xl space-y-6 sm:space-y-8">
             <section
               className={cn(
-                "relative rounded-2xl border border-[color:var(--primary)]/40 bg-[color:var(--secondary)]/75 p-4 sm:p-6 md:p-10 backdrop-blur-sm animate-in fade-in overflow-hidden"
+                "relative rounded-2xl border border-[color:var(--primary)]/40 bg-[color:var(--secondary)]/25 p-4 sm:p-6 md:p-10 backdrop-blur-sm animate-in fade-in overflow-hidden"
               )}
               aria-label="Invitation details"
             >
-              <div className="relative z-10 space-y-4 sm:space-y-6">
+              <div className="relative z-12 space-y-4 sm:space-y-6">
                 <Image
                   src="/images/SVPCET.webp"
                   alt="SVPCET"
@@ -501,7 +516,7 @@ export default function Page() {
               </div>
             </section>
 
-            <section className="rounded-2xl border border-[color:var(--primary)]/40 bg-[color:var(--secondary)]/75 p-4 sm:p-6 md:p-10 backdrop-blur-sm">
+            <section className="rounded-2xl border border-[color:var(--primary)]/40 bg-[color:var(--secondary)]/25 p-4 sm:p-6 md:p-10 backdrop-blur-sm">
               <h4 className="mb-3 sm:mb-4 text-center text-sm sm:text-base md:text-lg font-semibold text-[color:var(--primary)]">
                 Sign Your Presence
               </h4>
