@@ -300,23 +300,47 @@ export default function Page() {
           </div>
         </div>
 
-        {/* Launch Button */}
-        <div className="relative z-20 flex min-h-screen items-center justify-center pointer-events-auto px-4 sm:px-6 text-center">
-          <button
-            onClick={handleLaunch}
+        {/* Launch Button & Text */}
+        <div className="relative z-20 flex min-h-screen flex-col items-center justify-center pointer-events-auto px-4 sm:px-6 text-center">
+          
+          {/* Floating Text Instructions */}
+          <div
             className={cn(
-              "group relative px-10 sm:px-14 md:px-16 py-4 sm:py-5 md:py-6 bg-gradient-to-r from-indigo-600 via-purple-600 to-violet-700 text-white font-bold text-lg sm:text-xl md:text-2xl rounded-xl transition-all duration-300 transform shadow-[0_8px_32px_rgba(99,102,241,0.4)] border-2 border-indigo-400/40 uppercase tracking-wide",
-              "hover:from-indigo-500 hover:via-purple-500 hover:to-violet-600 hover:shadow-[0_12px_48px_rgba(99,102,241,0.6)] hover:scale-105 hover:-translate-y-1",
-              launching && "scale-95 opacity-0 pointer-events-none"
+              "mb-4 sm:mb-6 transition-opacity duration-300",
+              launching ? "opacity-0" : "opacity-100 animate-bounce"
             )}
           >
-            <span className="relative z-10 flex items-center gap-2 sm:gap-3">
-              <span className="text-xl sm:text-2xl">🚀</span>
-              <span>Launch</span>
-            </span>
+            <p className="text-white font-bold text-sm sm:text-base md:text-lg tracking-[0.2em] drop-shadow-[0_4px_4px_rgba(0,0,0,1)]">
+              Tap to launch!
+            </p>
+          </div>
+
+          {/* Image Button */}
+          <button
+            onClick={handleLaunch}
+            disabled={launching}
+            className={cn(
+              "relative group transition-all duration-500 ease-in-out transform",
+              // Hover effects (scale up)
+              "hover:scale-110 active:scale-95",
+              // Launching exit animation
+              launching && "scale-0 opacity-0 rotate-180"
+            )}
+            aria-label="Launch Spaceship"
+          >
+            {/* Glow effect behind the button */}
+            <div className="absolute inset-0 bg-indigo-500/30 blur-[40px] rounded-full group-hover:bg-indigo-400/50 transition-colors duration-500" />
+            
+            <Image
+              src="/images/launch_button.webp" // <--- REPLACE THIS WITH YOUR IMAGE PATH
+              alt="Launch Button"
+              width={200}
+              height={200}
+              className="relative w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 object-contain drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]"
+              priority
+            />
           </button>
         </div>
-
         <style jsx>{`
           @keyframes float-slow {
             0%,
@@ -349,15 +373,15 @@ export default function Page() {
           }
 
           .animate-float-slow {
-            animation: float-slow 6s ease-in-out infinite;
+            animation: float-slow 4s ease-in-out infinite;
           }
 
           .animate-float-medium {
-            animation: float-medium 5s ease-in-out infinite;
+            animation: float-medium 3s ease-in-out infinite;
           }
 
           .animate-float-fast {
-            animation: float-fast 4s ease-in-out infinite;
+            animation: float-fast 2s ease-in-out infinite;
           }
 
           .ship-anim-wrapper {
@@ -385,7 +409,7 @@ export default function Page() {
           }
 
           .ship-launch-animation {
-            animation: ship-launch-animation 7s
+            animation: ship-launch-animation 5s
               cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
           }
         `}</style>
@@ -571,7 +595,7 @@ export default function Page() {
         {!revealed && (
           <>
             {/* Desktop & Laptop: show envelope */}
-            <div className="hidden xl:block w-full max-w-2xl">
+            <div className="hidden xl:block w-full max-w-xl">
               <JungleLetter onReveal={handleReveal} />
             </div>
 
@@ -589,7 +613,7 @@ export default function Page() {
                   <div className="space-y-4">
                     <h2
                       className="text-2xl font-bold"
-                      style={{ color: "#8affff", letterSpacing: "2px" }}
+                      style={{ color: "#d3a826ff", letterSpacing: "2px" }}
                     >
                       WELCOME, EXPLORER
                     </h2>
@@ -612,7 +636,7 @@ export default function Page() {
                   </div>
                   <Button
                     onClick={handleReveal}
-                    className="bg-gradient-to-r from-indigo-600 via-purple-600 to-violet-700 text-white font-bold px-8 py-3 rounded-xl shadow-lg hover:scale-105 transition-transform"
+                    className="bg-gradient-to-r from-yellow-600 via-yellow-800 to-yellow-600 text-white font-bold px-8 py-3 rounded-xl shadow-lg hover:scale-105 transition-transform"
                   >
                     Proceed to Invitation
                   </Button>

@@ -48,9 +48,9 @@ export default function JungleLetter({ onReveal, className }: JungleLetterProps)
       <div className="pointer-events-none relative z-10 grid h-full w-full place-items-center rounded-2xl p-6 text-center">
         <div className="mx-auto max-w-2xl">
           <div className="text-lg md:text-xl font-semibold tracking-wide text-[color:var(--secondary)]/90">
-            You're invited to
+            You're invited to Technex 2k25!
           </div>
-          <div className="mt-3 text-sm md:text-base text-[color:var(--secondary)]/80">Tap the envelope to open</div>
+          <div className="mt-3 text-sm md:text-base text-[color:var(--secondary)]/80">Tap the envelope to open.</div>
           <div className="mx-auto mt-4 h-[2px] w-32 bg-[color:var(--primary)]/70" />
         </div>
       </div>

@@ -12,7 +12,7 @@ export default function FingerprintScanner({ className, onVerified }: Props) {
   const [verified, setVerified] = useState(false)
   const holdTimer = useRef<number | null>(null)
   const vibrateTimer = useRef<number | null>(null)
-  const HOLD_TIME = 3000
+  const HOLD_TIME = 750
 
   const startVibrate = () => {
     if (typeof navigator !== "undefined" && (navigator as any).vibrate) {
@@ -105,9 +105,9 @@ export default function FingerprintScanner({ className, onVerified }: Props) {
             ? "IDENTITY VERIFIED"
             : scanning
               ? "BIOMETRIC SYNC IN PROGRESS"
-              : "INITIATE BIOMETRIC LINK"}
+              : "PLACE THUMB TO INITIATE BIOMETRIC LINK"}
         </div>
-        <div className="hint">⚛️ NEO‑CELESTIA ACCESS NODE</div>
+        <div className="hint">NEO‑CELESTIAL AUTH GATE</div>
       </div>
 
       <style jsx>{`
