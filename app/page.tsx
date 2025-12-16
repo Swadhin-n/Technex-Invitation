@@ -451,7 +451,7 @@ export default function Page() {
                   alt="SVPCET"
                   width={1500}
                   height={300}
-                  className="h-auto w-full max-w-sm sm:max-w-md md:max-w-lg mx-auto object-contain drop-shadow"
+                  className="h-auto w-full max-w-lg sm:max-w-xl md:max-w-2xl lg:max-w-3xl mx-auto object-contain drop-shadow"
                   priority
                 />
 
@@ -465,7 +465,7 @@ export default function Page() {
                     alt="TECHNEX 2K25"
                     width={3000}
                     height={700}
-                    className="h-auto w-full max-w-xs sm:max-w-sm md:max-w-md object-contain"
+                    className="h-auto w-full max-w-sm sm:max-w-md md:max-w-lg object-contain"
                     priority
                   />
                 </div>
@@ -493,6 +493,12 @@ export default function Page() {
                       Date :
                     </span>{" "}
                     18th & 19th December 2025
+                  </p>
+                  <p>
+                     <span className="font-semibold text-[color:var(--primary)]">
+                      Time :
+                    </span>{" "}
+                    9:30 AM onwards
                   </p>
                   <p>
                     <span className="font-semibold text-[color:var(--primary)]">

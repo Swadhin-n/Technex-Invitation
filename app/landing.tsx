@@ -56,9 +56,9 @@ export default function Landing() {
             <Image
               src="/images/SVPCET.webp"
               alt="SVPCET"
-              width={120}
-              height={120}
-              className="opacity-80 hover:opacity-100 transition-opacity"
+              width={200}
+              height={200}
+              className="opacity-90 hover:opacity-100 transition-opacity w-44 h-44 sm:w-52 sm:h-52"
             />
     
           </div>
