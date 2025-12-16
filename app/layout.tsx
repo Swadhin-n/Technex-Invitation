@@ -7,7 +7,7 @@ import './globals.css'
 export const metadata: Metadata = {
   title: 'TECHNEX INVITATION',
   description: 'Created with Love',
-  generator: 'SwaNik',
+  generator: 'Swadhin Upadhyay',
 }
 
 export default function RootLayout({
