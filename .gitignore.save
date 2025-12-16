@@ -1,8 +1,4 @@
-node_modules
-<<<<<<< HEAD
-.next/
-=======
-.next
+
 
 # dependencies
 /node_modules
