@@ -236,7 +236,7 @@ export default function Page() {
         {
           "--background": "#0b0b0b",
           "--foreground": "#e8e8e8",
-          "--primary": "#d0a02a",
+          "--primary": "#e0aa3e",
           "--secondary": "#23144792",
           "--accent": "#281e58ff",
           "--parchment": "#efe3c4",
@@ -309,7 +309,7 @@ export default function Page() {
                   />
                 </div>
 
-                <h3 className="mt-4 text-pretty text-center text-xl md:text-2xl font-bold text-[color:var(--foreground)]">
+                <h3 className="mt-12 text-pretty text-center text-xl md:text-2xl font-bold text-[color:var(--foreground)]">
                   A Technical Extravaganza
                 </h3>
 
@@ -323,11 +323,10 @@ export default function Page() {
 
                 <div className="mt-6 grid gap-2 text-center">
                   <p>
-                    <span className="font-semibold text-[color:var(--primary)]">Date:</span> 10th Oct 2025
+                    <span className="font-semibold text-[color:var(--primary)]">Date:</span> 18th December 2025
                   </p>
                   <p>
-                    <span className="font-semibold text-[color:var(--primary)]">Venue:</span> CSE department block B,
-                    first floor
+                    <span className="font-semibold text-[color:var(--primary)]">Venue:</span> Block B, Second Floor
                   </p>
                 </div>
 
