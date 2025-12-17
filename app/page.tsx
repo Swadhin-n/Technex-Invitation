@@ -493,7 +493,7 @@ export default function Page() {
                     <span className="font-semibold text-[color:var(--primary)]">
                       Venue :
                     </span>{" "}
-                    St. Vincent Pallotti College of Engineering and Technology,
+                    Multi-Facility Centre, St. Vincent Pallotti College of Engineering and Technology,
                     Gavsi Manapur, Nagpur
                   </p>
                 </div>
