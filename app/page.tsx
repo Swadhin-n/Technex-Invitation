@@ -151,12 +151,12 @@ export default function Page() {
      
 
      {/* Launch Button & Text */}
-        <div className="relative z-20 flex min-h-screen flex-col items-center justify-end pb-16 sm:pb-24 pointer-events-auto px-4 sm:px-6 text-center">
+        <div className="relative z-20 flex min-h-screen flex-col items-center justify-end pb-32 sm:pb-24 pointer-events-auto px-4 sm:px-6 text-center">
           
           {/* Floating Text Instructions */}
           <div
             className={cn(
-              "mb-4 sm:mb-6 transition-opacity duration-300",
+              "mb-6 sm:mb-6 transition-opacity duration-300",
               launching ? "opacity-0" : "opacity-100 animate-bounce"
             )}
           >
@@ -164,6 +164,7 @@ export default function Page() {
               Tap to launch!
             </p>
           </div>
+
 
           {/* Image Button */}
           <button
