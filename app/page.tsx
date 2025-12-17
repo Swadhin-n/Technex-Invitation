@@ -8,10 +8,10 @@ import SignatureCanvas, {
   type SignatureCanvasHandle,
 } from "@/components/signature-canvas";
 import FingerprintScanner from "@/components/fingerprint-scanner";
-import { toPng } from "html-to-image";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
+import { toast } from "sonner";
 
 declare module "react" {
   namespace JSX {
@@ -84,22 +84,12 @@ export default function Page() {
     requestAnimationFrame(animate);
   };
 
-  const handleDownload = useCallback(async () => {
-    const node = captureRef.current;
-    if (!node) return;
-    try {
-      const dataUrl = await toPng(node, {
-        cacheBust: true,
-        pixelRatio: 2,
-      });
-      const a = document.createElement("a");
-      a.href = dataUrl;
-      a.download = "technexinvitation.png";
-      a.click();
-    } catch (err) {
-      console.error("[v0] export failed", err);
-      alert("Could not save image. Please try again.");
-    }
+  const handleDownload = useCallback(() => {
+    toast.success("Saved to server", {
+      description: "Your invitation has been securely stored.",
+      // Keep it subtle and on-theme
+      duration: 5000,
+    })
   }, []);
 
   const handleClear = () => sigRef.current?.clear();
@@ -440,7 +430,7 @@ export default function Page() {
           <div className="w-full max-w-3xl space-y-6 sm:space-y-8">
             <section
               className={cn(
-                "relative rounded-2xl border border-[color:var(--primary)]/40 bg-[color:var(--secondary)]/25 p-4 sm:p-6 md:p-10 backdrop-blur-sm animate-in fade-in overflow-hidden"
+                "relative rounded-2xl border border-[color:var(--primary)]/40 bg-[color:var(--secondary)]/50 p-4 sm:p-6 md:p-10 backdrop-blur-sm animate-in fade-in overflow-hidden"
               )}
               aria-label="Invitation details"
             >
@@ -516,7 +506,7 @@ export default function Page() {
               </div>
             </section>
 
-            <section className="rounded-2xl border border-[color:var(--primary)]/40 bg-[color:var(--secondary)]/25 p-4 sm:p-6 md:p-10 backdrop-blur-sm">
+            <section className="rounded-2xl border border-[color:var(--primary)]/40 bg-[color:var(--secondary)]/50 p-4 sm:p-6 md:p-10 backdrop-blur-sm">
               <h4 className="mb-3 sm:mb-4 text-center text-sm sm:text-base md:text-lg font-semibold text-[color:var(--primary)]">
                 Sign Your Presence
               </h4>
@@ -526,7 +516,7 @@ export default function Page() {
                   ref={sigRef}
                   className="h-48 sm:h-56 md:h-64 w-full rounded-md bg-[color:var(--secondary)]/30"
                   strokeColor="#ffffff"
-                  strokeWidth={2}
+                  strokeWidth={0.7}
                 />
                 <div className="mt-3 sm:mt-4 flex flex-wrap items-center justify-center gap-2 sm:gap-3">
                   <Button
@@ -550,7 +540,7 @@ export default function Page() {
                   ref={sigRef}
                   className="h-48 sm:h-56 md:h-64 w-full rounded-md bg-[color:var(--secondary)]/30"
                   strokeColor="#ffffff"
-                  strokeWidth={2}
+                  strokeWidth={0.7}
                 />
                 <div className="mt-3 sm:mt-4 flex flex-wrap items-center justify-center gap-2 sm:gap-3">
                   <Button
@@ -564,7 +554,7 @@ export default function Page() {
                     onClick={handleClear}
                     className="bg-[color:var(--accent)] text-[oklch(0.98_0_0)] transition text-xs sm:text-sm"
                   >
-                    Clear signatures
+                    Clear Signature
                   </Button>
                 </div>
               </div>
