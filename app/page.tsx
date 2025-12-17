@@ -561,7 +561,8 @@ export default function Page() {
             </section>
 
             <footer className="text-center text-xs sm:text-sm">
-              Crafted for TECHNEX 2K25 — Let the Cosmos align!
+              Crafted for TECHNEX 2K25 — Let the Cosmos align!<br>
+                © Technex 25-26. Made by team - Nikita & Swadhin.
             </footer>
           </div>
         )}
